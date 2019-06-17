@@ -35,7 +35,8 @@ public class MainActivity extends AppCompatActivity {
         gerenciarCategoria.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Não implementado", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, GerenciarCategoriaActivity.class);
+                startActivityForResult(intent, GERENCIAR_CATEGORIA);
             }
         });
     }
