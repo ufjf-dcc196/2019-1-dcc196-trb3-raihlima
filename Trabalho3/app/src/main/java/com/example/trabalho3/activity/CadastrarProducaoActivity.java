@@ -1,7 +1,9 @@
-package com.example.trabalho3;
+package com.example.trabalho3.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.trabalho3.R;
 
 public class CadastrarProducaoActivity extends AppCompatActivity {
 

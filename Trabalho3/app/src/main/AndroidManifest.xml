@@ -9,11 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AtividadeActivity"></activity>
-        <activity android:name=".CategoriaActivity" />
-        <activity android:name=".CadastrarProducaoActivity" />
-        <activity android:name=".CadastrarCandidatoActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".activity.GerenciarCandidatoActivity"></activity>
+        <activity android:name=".activity.AtividadeActivity" />
+        <activity android:name=".activity.CategoriaActivity" />
+        <activity android:name=".activity.CadastrarProducaoActivity" />
+        <activity android:name=".activity.CadastrarCandidatoActivity" />
+        <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

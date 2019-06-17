@@ -1,13 +1,15 @@
-package com.example.trabalho3;
+package com.example.trabalho3.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class CadastrarCandidatoActivity extends AppCompatActivity {
+import com.example.trabalho3.R;
+
+public class AtividadeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cadastrar_candidato);
+        setContentView(R.layout.activity_atividade);
     }
 }
