@@ -29,6 +29,7 @@ public class GerenciarCandidatoActivity extends AppCompatActivity {
 
 
     private static final int CADASTRAR_CANDIDATO = 1;
+    private static final int VER_CANDIDATO = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,18 @@ public class GerenciarCandidatoActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(GerenciarCandidatoActivity.this, CadastrarCandidatoActivity.class);
                 startActivityForResult(intent, CADASTRAR_CANDIDATO);
+            }
+        });
+
+        candidatoDadosAdapter.setOnCandidatoDadosClickListener(new CandidatoDadosAdapter.OnCandidatoDadosClickListener() {
+            @Override
+            public void onCandidatoDadosClick(View v, int position) {
+                Bundle bundle = new Bundle();
+                cursor.moveToPosition(position);
+                bundle.putInt("id",cursor.getInt(cursor.getColumnIndex(HeadHunterContract.CandidatoDados._ID)));
+                Intent intent = new Intent(GerenciarCandidatoActivity.this, CandidatoActivity.class);
+                intent.putExtra("info",bundle);
+                startActivityForResult(intent,VER_CANDIDATO);
             }
         });
 
