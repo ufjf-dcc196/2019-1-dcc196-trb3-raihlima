@@ -1,5 +1,8 @@
 package com.example.trabalho3.activity;
 
+import android.app.AlertDialog;
+import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -9,6 +12,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.trabalho3.R;
 import com.example.trabalho3.adapter.CandidatoDadosAdapter;
@@ -35,10 +40,10 @@ public class GerenciarCategoriaActivity extends AppCompatActivity {
 
         helper = new HeadHunterDBHelper(getApplicationContext());
         dataBase = helper.getWritableDatabase();
-        cursor = dataBase.query(HeadHunterContract.CategoriaDados.TABLE_NAME, HeadHunterContract.TABELA_CATEGORIA, null, null, null,null, HeadHunterContract.CategoriaDados.COLUMN_TITULO + " ASC");
+        cursor = dataBase.query(HeadHunterContract.CategoriaDados.TABLE_NAME, HeadHunterContract.TABELA_CATEGORIA, null, null, null,null, null);//HeadHunterContract.CategoriaDados.COLUMN_TITULO + " ASC");
 
         criarCategoria = (Button) findViewById(R.id.buttonCadastrarCategoria);
-        recyclerView = (RecyclerView) findViewById(R.id.rvGerenciarCandidato);
+        recyclerView = (RecyclerView) findViewById(R.id.rvGerenciarCategoria);
         categoriaDadosAdapter = new CategoriaDadosAdapter(cursor);
         recyclerView.setAdapter(categoriaDadosAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -46,8 +51,37 @@ public class GerenciarCategoriaActivity extends AppCompatActivity {
         criarCategoria.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                criarNovaCategoria();
+            }
+        });
+    }
+    
+    private void criarNovaCategoria(){
+        //Toast.makeText(GerenciarCategoriaActivity.this, "Teste Click Curto", Toast.LENGTH_SHORT).show();
+
+        //Dialogo de Nova etiqueta
+        AlertDialog.Builder builder = new AlertDialog.Builder(GerenciarCategoriaActivity.this);
+        View viewBuilder = getLayoutInflater().inflate(R.layout.nova_categoria_dialog_layout,null);
+        final EditText tituloCategoria = (EditText) viewBuilder.findViewById(R.id.txtNovaCategoria);
+        builder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                ContentValues valuesCategoria = new ContentValues();
+                valuesCategoria.put(HeadHunterContract.CategoriaDados.COLUMN_TITULO,tituloCategoria.getText().toString());
+                dataBase.insert(HeadHunterContract.CategoriaDados.TABLE_NAME,null,valuesCategoria);
+                cursor = dataBase.query(HeadHunterContract.CategoriaDados.TABLE_NAME, HeadHunterContract.TABELA_CATEGORIA, null, null, null,null, null);
+                categoriaDadosAdapter.alteraDados(cursor);
+                Toast.makeText(GerenciarCategoriaActivity.this,"Categoria Criada", Toast.LENGTH_SHORT).show();
+            }
+        });
+        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
 
             }
         });
+        builder.setTitle("Criar nova Etiqueta");
+        builder.setView(viewBuilder);
+        builder.show();
     }
 }

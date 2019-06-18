@@ -48,7 +48,7 @@ public class HeadHunterContract {
 
     public static final String[] TABELA_CATEGORIA ={
             CategoriaDados._ID,
-            CategoriaDados.COLUMN_TITULO,
+            CategoriaDados.COLUMN_TITULO
     };
 
     public static final class CategoriaDados implements BaseColumns{

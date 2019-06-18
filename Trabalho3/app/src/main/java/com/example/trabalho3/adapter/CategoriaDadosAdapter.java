@@ -38,7 +38,7 @@ public class CategoriaDadosAdapter extends RecyclerView.Adapter <CategoriaDadosA
         Context context = viewGroup.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
-        View linha = inflater.inflate(R.layout.gerenciar_cadidato_layout, viewGroup, false);
+        View linha = inflater.inflate(R.layout.gerenciar_categoria_layout, viewGroup, false);
         CategoriaDadosAdapter.ViewHolder vh = new CategoriaDadosAdapter.ViewHolder(linha);
         return vh;
     }
@@ -58,7 +58,6 @@ public class CategoriaDadosAdapter extends RecyclerView.Adapter <CategoriaDadosA
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView titulo;
-
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

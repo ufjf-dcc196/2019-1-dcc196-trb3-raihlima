@@ -13,7 +13,6 @@
         <activity android:name=".activity.CandidatoActivity" />
         <activity android:name=".activity.GerenciarCandidatoActivity" />
         <activity android:name=".activity.AtividadeActivity" />
-        <activity android:name=".activity.CategoriaActivity" />
         <activity android:name=".activity.CadastrarProducaoActivity" />
         <activity android:name=".activity.CadastrarCandidatoActivity" />
         <activity android:name=".activity.MainActivity">
