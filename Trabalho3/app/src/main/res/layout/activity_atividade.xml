@@ -7,7 +7,7 @@
     tools:context=".activity.AtividadeActivity">
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/buttonConfirmarNovaAtividade"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -19,20 +19,20 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TableLayout
-        android:layout_width="395dp"
-        android:layout_height="659dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/button4"
+        app:layout_constraintBottom_toTopOf="@+id/buttonConfirmarNovaAtividade"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/textView13"
@@ -42,17 +42,17 @@
                 android:text="Descrição:" />
 
             <EditText
-                android:id="@+id/editText14"
+                android:id="@+id/edtTxtDescricaoNovaAtivicade"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="15"
                 android:ems="10"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName|textCapSentences" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/textView12"
@@ -62,17 +62,19 @@
                 android:text="Data:" />
 
             <EditText
-                android:id="@+id/editText13"
+                android:id="@+id/edtTxtDataNovaAtividade"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="15"
+                android:editable="false"
                 android:ems="10"
-                android:inputType="date" />
+                android:hint="DD/MM/AAAA"
+                android:inputType="none" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/textView11"
@@ -82,18 +84,18 @@
                 android:text="Horas:" />
 
             <EditText
-                android:id="@+id/editText5"
+                android:id="@+id/edtTxtHoraNovaAtividade"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="15"
                 android:ems="10"
-                android:inputType="numberSigned" />
+                android:inputType="numberSigned|numberDecimal" />
 
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent">
 
         </TableRow>
     </TableLayout>

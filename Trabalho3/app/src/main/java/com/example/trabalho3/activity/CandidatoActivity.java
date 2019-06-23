@@ -51,6 +51,8 @@ public class CandidatoActivity extends AppCompatActivity {
 
     private final int CADASTRAR_PRODUCAO = 1;
 
+    private final int GERENCIAR_PRODUCAO = 2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -146,7 +148,22 @@ public class CandidatoActivity extends AppCompatActivity {
 
             }
         });
+
+        adapter.setOnProducaoDadosClickListener(new ProducaoAdapter.OnProducaoDadosClickListener() {
+            @Override
+            public void onProducaoDadosClick(View v, int position) {
+                Intent intent = new Intent(CandidatoActivity.this, ProducaoActivity.class);
+                Bundle bundle = new Bundle();
+                cursorProducao.moveToPosition(position);
+                int idProducao = cursorProducao.getInt(cursorProducao.getColumnIndex(HeadHunterContract.ProducaoDados._ID));
+                bundle.putInt("idProducao", idProducao);
+                intent.putExtra("info",bundle);
+                startActivityForResult(intent, GERENCIAR_PRODUCAO);
+            }
+        });
     }
+
+
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
