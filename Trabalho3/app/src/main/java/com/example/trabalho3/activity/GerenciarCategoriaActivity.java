@@ -1,11 +1,13 @@
 package com.example.trabalho3.activity;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -32,6 +34,7 @@ public class GerenciarCategoriaActivity extends AppCompatActivity {
     private SQLiteDatabase dataBase;
     private HeadHunterDBHelper helper;
 
+    private final int CATEGORIA_SELECIONADA = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,12 +57,31 @@ public class GerenciarCategoriaActivity extends AppCompatActivity {
                 criarNovaCategoria();
             }
         });
-    }
-    
-    private void criarNovaCategoria(){
-        //Toast.makeText(GerenciarCategoriaActivity.this, "Teste Click Curto", Toast.LENGTH_SHORT).show();
 
-        //Dialogo de Nova etiqueta
+        categoriaDadosAdapter.setOnCategoriaDadosClickListener(new CategoriaDadosAdapter.OnCategoriaDadosClickListener() {
+            @Override
+            public void onCategoriaDadosClick(View v, int position) {
+                cursor.moveToPosition(position);
+                Intent intent = new Intent(GerenciarCategoriaActivity.this, CategoriaActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("idCategoria", cursor.getInt(cursor.getColumnIndex(HeadHunterContract.CategoriaDados._ID)));
+                intent.putExtra("info",bundle);
+                startActivityForResult(intent,CATEGORIA_SELECIONADA);
+            }
+        });
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+            atualizaDados();
+    }
+
+    private void atualizaDados(){
+        cursor = dataBase.query(HeadHunterContract.CategoriaDados.TABLE_NAME, HeadHunterContract.TABELA_CATEGORIA, null, null, null,null, null);//HeadHunterContract.CategoriaDados.COLUMN_TITULO + " ASC");
+        categoriaDadosAdapter.alteraDados(cursor);
+    }
+
+    private void criarNovaCategoria(){
         AlertDialog.Builder builder = new AlertDialog.Builder(GerenciarCategoriaActivity.this);
         View viewBuilder = getLayoutInflater().inflate(R.layout.nova_categoria_dialog_layout,null);
         final EditText tituloCategoria = (EditText) viewBuilder.findViewById(R.id.txtNovaCategoria);
