@@ -24,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
         gerenciarCandidato = (Button) findViewById(R.id.buttonGerenciarCandidatos);
         gerenciarCategoria = (Button) findViewById(R.id.buttonGerenciarCategrorias);
 
+        setTitle("Menu Principal");
+
         gerenciarCandidato.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

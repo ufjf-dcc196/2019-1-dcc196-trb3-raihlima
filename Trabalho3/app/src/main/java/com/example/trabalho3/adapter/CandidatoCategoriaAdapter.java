@@ -48,7 +48,7 @@ public class CandidatoCategoriaAdapter extends RecyclerView.Adapter <CandidatoCa
     public void onBindViewHolder(@NonNull CandidatoCategoriaAdapter.ViewHolder viewHolder, int index) {
         cursor.moveToPosition(index);
         String nome = this.cursor.getString(cursor.getColumnIndex(HeadHunterContract.CandidatoDados.COLUMN_NOME));
-        String horas = "";
+        String horas = this.cursor.getString(cursor.getColumnIndex("horas_totais"));
 
         viewHolder.nome.setText(nome);
         viewHolder.horas.setText(horas);

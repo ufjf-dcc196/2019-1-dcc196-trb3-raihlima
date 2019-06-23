@@ -56,6 +56,8 @@ public class ProducaoActivity extends AppCompatActivity {
         editarProducao = (Button) findViewById(R.id.buttonEditarProducao);
         excluirProducao = (Button) findViewById(R.id.buttonExcluirProducao);
 
+        setTitle("Produção");
+
         helper = new HeadHunterDBHelper(getApplicationContext());
         database = helper.getWritableDatabase();
 

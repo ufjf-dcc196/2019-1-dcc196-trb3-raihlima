@@ -148,7 +148,9 @@ public class AtividadeActivity extends AppCompatActivity {
     }
 
     public void preencherdados(){
+        setTitle("Cadastrar Atividade");
         if(idAtividade>-1){
+            setTitle("Editar Atividade");
             HeadHunterDBHelper helper = new HeadHunterDBHelper(getApplicationContext());
             SQLiteDatabase db = helper.getWritableDatabase();
             String where = HeadHunterContract.AtividadeDados._ID + " = " + idAtividade;

@@ -223,7 +223,9 @@ public class CadastrarProducaoActivity extends AppCompatActivity {
     }
 
     public void preencheCampos(){
+        setTitle("Cadastrar Producao");
         if(idProducao>-1){
+            setTitle("Editar Producao");
             HeadHunterDBHelper helper = new HeadHunterDBHelper(getApplicationContext());
             SQLiteDatabase db = helper.getWritableDatabase();
             String where = HeadHunterContract.ProducaoDados._ID + " = " + idProducao;

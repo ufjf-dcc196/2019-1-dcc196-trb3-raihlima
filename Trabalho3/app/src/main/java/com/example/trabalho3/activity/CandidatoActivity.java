@@ -79,6 +79,7 @@ public class CandidatoActivity extends AppCompatActivity {
         excluirCandidato = (Button) findViewById(R.id.buttonExcluirCandidato);
         adicionarProducao = (Button) findViewById(R.id.buttonAdicionarProducao);
 
+        setTitle("Candidato");
 
         id = getIntent().getBundleExtra("info").getInt("id");
         preencheInfo();
@@ -300,9 +301,11 @@ public class CandidatoActivity extends AppCompatActivity {
 
     private void alteraNomeBotao(){
         if(editavel==false){
+            setTitle("Candidato");
             editarCandidato.setText("Editar Candidato");
             excluirCandidato.setText("Excluir Candidato");
         } else {
+            setTitle("Editar Candidato");
             editarCandidato.setText("Confirmar Alterações");
             excluirCandidato.setText("Cancelar Alterações");
         }

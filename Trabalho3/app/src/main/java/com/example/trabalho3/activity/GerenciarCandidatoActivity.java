@@ -36,6 +36,8 @@ public class GerenciarCandidatoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gerenciar_candidato);
 
+        setTitle("Lista de Candidatos");
+
         helper = new HeadHunterDBHelper(getApplicationContext());
         dataBase = helper.getWritableDatabase();
         cursor = dataBase.query(HeadHunterContract.CandidatoDados.TABLE_NAME, HeadHunterContract.TABELA_CANDIDATO, null, null, null,null, HeadHunterContract.CandidatoDados.COLUMN_NOME + " ASC");

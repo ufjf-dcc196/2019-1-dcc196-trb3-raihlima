@@ -48,6 +48,8 @@ public class CadastrarCandidatoActivity extends AppCompatActivity {
         telefone = (EditText) findViewById(R.id.txtTelefoneCandidato);
         email = (EditText) findViewById(R.id.txtEmailCandidato);
 
+        setTitle("Cadastrar Candidato");
+
         dataNascimento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

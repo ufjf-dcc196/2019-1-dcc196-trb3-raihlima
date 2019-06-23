@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.example.trabalho3.R;
 
+//Não utilizado
 public class GerenciarProducaoActivity extends AppCompatActivity {
 
     @Override

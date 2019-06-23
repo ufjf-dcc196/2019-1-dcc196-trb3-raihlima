@@ -41,6 +41,8 @@ public class GerenciarCategoriaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gerenciar_categoria);
 
+        setTitle("Lista de Categorias");
+
         helper = new HeadHunterDBHelper(getApplicationContext());
         dataBase = helper.getWritableDatabase();
         cursor = dataBase.query(HeadHunterContract.CategoriaDados.TABLE_NAME, HeadHunterContract.TABELA_CATEGORIA, null, null, null,null, null);//HeadHunterContract.CategoriaDados.COLUMN_TITULO + " ASC");
