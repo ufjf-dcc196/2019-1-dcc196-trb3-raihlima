@@ -3,6 +3,7 @@ package com.example.trabalho3.activity;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -27,6 +28,7 @@ import java.util.Calendar;
 public class AtividadeActivity extends AppCompatActivity {
 
     private int idProducao;
+    private int idAtividade;
     private EditText descricao;
     private EditText data;
     private EditText hora;
@@ -40,10 +42,13 @@ public class AtividadeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_atividade);
 
         idProducao = getIntent().getBundleExtra("info").getInt("idProducao");
+        idAtividade = getIntent().getBundleExtra("info").getInt("idAtividade");
         descricao = (EditText) findViewById(R.id.edtTxtDescricaoNovaAtivicade);
         data = (EditText) findViewById(R.id.edtTxtDataNovaAtividade);
         hora = (EditText) findViewById(R.id.edtTxtHoraNovaAtividade);
         confirmar = (Button) findViewById(R.id.buttonConfirmarNovaAtividade);
+
+        preencherdados();
 
         confirmar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,8 +125,15 @@ public class AtividadeActivity extends AppCompatActivity {
         values.put(HeadHunterContract.AtividadeDados.COLUMN_ID_PRODUCAO,idProducao);
         HeadHunterDBHelper helper = new HeadHunterDBHelper(getApplicationContext());
         SQLiteDatabase db = helper.getWritableDatabase();
-        long novoID = db.insert(HeadHunterContract.AtividadeDados.TABLE_NAME,null,values);
-        Toast.makeText(AtividadeActivity.this,"Nova Atividade criada.",Toast.LENGTH_SHORT).show();
+        if(idAtividade==-1){
+            long novoID = db.insert(HeadHunterContract.AtividadeDados.TABLE_NAME,null,values);
+            Toast.makeText(AtividadeActivity.this,"Nova Atividade criada.",Toast.LENGTH_SHORT).show();
+        } else {
+            String where = HeadHunterContract.AtividadeDados._ID + " = " + idAtividade;
+            db.update(HeadHunterContract.AtividadeDados.TABLE_NAME,values,where,null);
+            Toast.makeText(AtividadeActivity.this,"Atividade alterada.",Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     public boolean verificaPreenchimento(){
@@ -133,5 +145,22 @@ public class AtividadeActivity extends AppCompatActivity {
             return false;
         }
         return true;
+    }
+
+    public void preencherdados(){
+        if(idAtividade>-1){
+            HeadHunterDBHelper helper = new HeadHunterDBHelper(getApplicationContext());
+            SQLiteDatabase db = helper.getWritableDatabase();
+            String where = HeadHunterContract.AtividadeDados._ID + " = " + idAtividade;
+            Cursor cursorAux = db.query(HeadHunterContract.AtividadeDados.TABLE_NAME, HeadHunterContract.TABELA_ATIVIDADE, where, null,null,null,null);
+            cursorAux.moveToFirst();
+            descricao.setText(cursorAux.getString(cursorAux.getColumnIndex(HeadHunterContract.AtividadeDados.COLUMN_DESCRICAO)));
+            Timestamp ts = Timestamp.valueOf(cursorAux.getString(cursorAux.getColumnIndex(HeadHunterContract.AtividadeDados.COLUMN_DATA)));
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            String dataL = dateFormat.format(ts);
+            data.setText(dataL);
+            hora.setText(cursorAux.getString(cursorAux.getColumnIndex(HeadHunterContract.AtividadeDados.COLUMN_HORAS)));
+            confirmar.setText("Confirmar Alterações");
+        }
     }
 }

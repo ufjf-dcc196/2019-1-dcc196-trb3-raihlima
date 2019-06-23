@@ -74,11 +74,11 @@ public class ProducaoActivity extends AppCompatActivity {
                 Intent intent = new Intent(ProducaoActivity.this, AtividadeActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putInt("idProducao",idProducao);
+                bundle.putInt("idAtividade",-1);
                 intent.putExtra("info",bundle);
                 startActivityForResult(intent,CRIAR_ATIVIDADE);
             }
         });
-
 
         excluirProducao.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,6 +116,71 @@ public class ProducaoActivity extends AppCompatActivity {
                 startActivityForResult(intent,EDITAR_PRODUCAO);
             }
         });
+
+        adapter.setOnAtividadeDadosClickListener(new AtividadeAdapter.OnAtividadeDadosClickListener() {
+            @Override
+            public void onAtividadeDadosClick(View v, int position) {
+                final int index = position;
+                AlertDialog.Builder mensagem = new AlertDialog.Builder(ProducaoActivity.this);
+                mensagem.setTitle("Informação");
+                mensagem.setMessage("O que deseja fazer com a Atividade?");
+                mensagem.setPositiveButton("Editar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        Intent intent = new Intent(ProducaoActivity.this, AtividadeActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("idProducao",idProducao);
+                        cursorAtividade.moveToPosition(index);
+
+                        bundle.putInt("idAtividade",cursorAtividade.getInt(cursorAtividade.getColumnIndex(HeadHunterContract.AtividadeDados._ID)));
+                        intent.putExtra("info",bundle);
+                        startActivityForResult(intent,CRIAR_ATIVIDADE);
+                        //Toast.makeText(ProducaoActivity.this, "Candidato excluido", Toast.LENGTH_SHORT).show();
+                        //setResult(Activity.RESULT_OK);
+                        //finish();
+                    }
+                });
+                mensagem.setNeutralButton("Excluir", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        AlertDialog.Builder msgExcluir = new AlertDialog.Builder(ProducaoActivity.this);
+                        msgExcluir.setTitle("Alerta");
+                        msgExcluir.setMessage("Deseja realmente excluir a atividade?");
+                        msgExcluir.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                removerAtividade(index);
+                                atualizaDados();
+                                Toast.makeText(ProducaoActivity.this, "Atividade excluida", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        msgExcluir.setNeutralButton("Não", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        });
+                        msgExcluir.show();
+                    }
+                });
+                mensagem.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                mensagem.show();
+            }
+        });
+    }
+
+    private void removerAtividade(int index){
+        cursorAtividade.moveToPosition(index);
+        String where = HeadHunterContract.AtividadeDados._ID + " = " + cursorAtividade.getInt(cursorAtividade.getColumnIndex(HeadHunterContract.AtividadeDados._ID));
+        database.delete(HeadHunterContract.AtividadeDados.TABLE_NAME, where,null);
+
     }
 
     private void removeRegistro(){

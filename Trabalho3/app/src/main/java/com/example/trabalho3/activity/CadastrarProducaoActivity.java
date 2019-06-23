@@ -232,13 +232,9 @@ public class CadastrarProducaoActivity extends AppCompatActivity {
             titulo.setText(cursor.getString(cursor.getColumnIndex(HeadHunterContract.ProducaoDados.COLUMN_TITULO)));
             descricao.setText(cursor.getString(cursor.getColumnIndex(HeadHunterContract.ProducaoDados.COLUMN_DESCRICAO)));
 
-
             Timestamp ts = Timestamp.valueOf(cursor.getString(cursor.getColumnIndex(HeadHunterContract.ProducaoDados.COLUMN_INICIO)));
-
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
             String dataL = dateFormat.format(ts);
-            //String dataL  = (this.cursor.getString(cursor.getColumnIndex(TarefaContract.TarefaDados.COLUMN_DATA_LIMITE)));
-
             inicio.setText(dataL);
 
             ts = Timestamp.valueOf(cursor.getString(cursor.getColumnIndex(HeadHunterContract.ProducaoDados.COLUMN_FIM)));
