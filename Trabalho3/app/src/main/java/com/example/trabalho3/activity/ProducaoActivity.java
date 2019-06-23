@@ -1,6 +1,8 @@
 package com.example.trabalho3.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -11,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.trabalho3.R;
 import com.example.trabalho3.adapter.AtividadeAdapter;
@@ -21,12 +24,14 @@ import com.example.trabalho3.dados.HeadHunterDBHelper;
 public class ProducaoActivity extends AppCompatActivity {
 
     private int idProducao;
+    private int idCandidato;
     private Bundle bundle;
     private EditText producao;
     private EditText categoria;
     private Button adicionarAtividade;
     private Button editarProducao;
     private Button excluirProducao;
+    private boolean editavel = false;
 
     private RecyclerView recyclerView;
     private AtividadeAdapter adapter;
@@ -38,6 +43,7 @@ public class ProducaoActivity extends AppCompatActivity {
     private HeadHunterDBHelper helper;
 
     private final int CRIAR_ATIVIDADE = 1;
+    private final int EDITAR_PRODUCAO = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +80,51 @@ public class ProducaoActivity extends AppCompatActivity {
         });
 
 
+        excluirProducao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder mensagem = new AlertDialog.Builder(ProducaoActivity.this);
+                mensagem.setTitle("Alerta");
+                mensagem.setMessage("Você realmente deseja excluir a Produção?");
+                mensagem.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        removeRegistro();
+                        Toast.makeText(ProducaoActivity.this,"Produção excluida", Toast.LENGTH_SHORT).show();
+                        setResult(Activity.RESULT_OK);
+                        finish();
+                    }
+                });
+                mensagem.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                mensagem.show();
+            }
+        });
+
+        editarProducao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProducaoActivity.this, CadastrarProducaoActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("idProducao",idProducao);
+                bundle.putInt("idCandidato",idCandidato);
+                intent.putExtra("info",bundle);
+                startActivityForResult(intent,EDITAR_PRODUCAO);
+            }
+        });
+    }
+
+    private void removeRegistro(){
+        String where = HeadHunterContract.ProducaoDados._ID + " = " + idProducao;
+        database.delete(HeadHunterContract.ProducaoDados.TABLE_NAME,where,null);
+        where = HeadHunterContract.AtividadeDados.COLUMN_ID_PRODUCAO + " = " + idProducao;
+        database.delete(HeadHunterContract.AtividadeDados.TABLE_NAME,where,null);
+        database.close();
+
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -90,6 +141,7 @@ public class ProducaoActivity extends AppCompatActivity {
 
     private void preencheDados(){
         idProducao = bundle.getInt("idProducao");
+        idCandidato = bundle.getInt("idCandidato");
         String where = "_ID = " + idProducao;
         cursorProducao = database.query(HeadHunterContract.ProducaoDados.TABLE_NAME,HeadHunterContract.TABELA_PRODUCAO,where,null,null,null,null);
         where = HeadHunterContract.AtividadeDados.COLUMN_ID_PRODUCAO + " = " + idProducao;

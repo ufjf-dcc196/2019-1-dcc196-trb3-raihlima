@@ -32,6 +32,8 @@ import java.util.Calendar;
 public class CadastrarProducaoActivity extends AppCompatActivity {
 
     private int idCandidato;
+    private int idProducao;
+    private int idCategoria = -1;
     private EditText titulo;
     private EditText descricao;
     private EditText inicio;
@@ -57,6 +59,8 @@ public class CadastrarProducaoActivity extends AppCompatActivity {
         cursor = dataBase.query(HeadHunterContract.CategoriaDados.TABLE_NAME, HeadHunterContract.TABELA_CATEGORIA, null, null, null,null, null);
 
         idCandidato = getIntent().getBundleExtra("info").getInt("idCandidato");
+        idProducao = getIntent().getBundleExtra("info").getInt("idProducao");
+
         titulo = (EditText) findViewById(R.id.txtTituloNovaProducao);
         descricao = (EditText) findViewById(R.id.txtDescricaoNovaProducao);
         inicio = (EditText) findViewById(R.id.txtInicioNovaProducao);
@@ -64,9 +68,12 @@ public class CadastrarProducaoActivity extends AppCompatActivity {
         confirmar = (Button) findViewById(R.id.buttonCadastrarNovaProducao);
         recyclerView = (RecyclerView) findViewById(R.id.rvNovaProducao);
 
-        selecionarCategoriaAdapter = new SelecionarCategoriaAdapter(cursor);
+        preencheCampos();
+
+        selecionarCategoriaAdapter = new SelecionarCategoriaAdapter(cursor, idCategoria);
         recyclerView.setAdapter(selecionarCategoriaAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
 
         confirmar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -203,7 +210,45 @@ public class CadastrarProducaoActivity extends AppCompatActivity {
         values.put(HeadHunterContract.ProducaoDados.COLUMN_ID_CATEGORIA, idCategoria);
         HeadHunterDBHelper helper = new HeadHunterDBHelper(getApplicationContext());
         SQLiteDatabase db = helper.getWritableDatabase();
-        long novoID = db.insert(HeadHunterContract.ProducaoDados.TABLE_NAME,null,values);
-        Toast.makeText(CadastrarProducaoActivity.this,"Nova Producao criada.",Toast.LENGTH_SHORT).show();
+        if(idProducao==-1){
+            long novoID = db.insert(HeadHunterContract.ProducaoDados.TABLE_NAME,null,values);
+            Toast.makeText(CadastrarProducaoActivity.this,"Nova Producao criada.",Toast.LENGTH_SHORT).show();
+        } else {
+            String where = HeadHunterContract.ProducaoDados._ID + " = " + idProducao;
+
+            db.update(HeadHunterContract.ProducaoDados.TABLE_NAME,values,where,null);
+            Toast.makeText(CadastrarProducaoActivity.this,"Producao alterada!",Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    public void preencheCampos(){
+        if(idProducao>-1){
+            HeadHunterDBHelper helper = new HeadHunterDBHelper(getApplicationContext());
+            SQLiteDatabase db = helper.getWritableDatabase();
+            String where = HeadHunterContract.ProducaoDados._ID + " = " + idProducao;
+            Cursor cursor = db.query(HeadHunterContract.ProducaoDados.TABLE_NAME,HeadHunterContract.TABELA_PRODUCAO,where,null,null,null,null);
+            cursor.moveToFirst();
+            titulo.setText(cursor.getString(cursor.getColumnIndex(HeadHunterContract.ProducaoDados.COLUMN_TITULO)));
+            descricao.setText(cursor.getString(cursor.getColumnIndex(HeadHunterContract.ProducaoDados.COLUMN_DESCRICAO)));
+
+
+            Timestamp ts = Timestamp.valueOf(cursor.getString(cursor.getColumnIndex(HeadHunterContract.ProducaoDados.COLUMN_INICIO)));
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            String dataL = dateFormat.format(ts);
+            //String dataL  = (this.cursor.getString(cursor.getColumnIndex(TarefaContract.TarefaDados.COLUMN_DATA_LIMITE)));
+
+            inicio.setText(dataL);
+
+            ts = Timestamp.valueOf(cursor.getString(cursor.getColumnIndex(HeadHunterContract.ProducaoDados.COLUMN_FIM)));
+            dataL = dateFormat.format(ts);
+            //String dataL  = (this.cursor.getString(cursor.getColumnIndex(TarefaContract.TarefaDados.COLUMN_DATA_LIMITE)));
+
+            fim.setText(dataL);
+
+
+            idCategoria = cursor.getInt(cursor.getColumnIndex(HeadHunterContract.ProducaoDados.COLUMN_ID_CATEGORIA));
+        }
     }
 }

@@ -19,12 +19,18 @@ public class SelecionarCategoriaAdapter extends RecyclerView.Adapter <Selecionar
     private Cursor cursor;
     private SelecionarCategoriaAdapter.OnSelecionarCategoriaClickListener listener;
     private int selecionado = -1;
+    private int selecionadoCategoriaID = -1;
 
     public SelecionarCategoriaAdapter(){
     }
 
     public SelecionarCategoriaAdapter(Cursor cursor) {
         this.cursor = cursor;
+    }
+
+    public SelecionarCategoriaAdapter(Cursor cursor, int selecionadoCategoriaID) {
+        this.cursor = cursor;
+        this.selecionadoCategoriaID = selecionadoCategoriaID;
     }
 
     public void alteraDados(Cursor cursor){
@@ -53,6 +59,11 @@ public class SelecionarCategoriaAdapter extends RecyclerView.Adapter <Selecionar
         String titulo = this.cursor.getString(cursor.getColumnIndex(HeadHunterContract.CategoriaDados.COLUMN_TITULO));
 
         viewHolder.titulo.setText(titulo);
+
+        if(cursor.getInt(cursor.getColumnIndex(HeadHunterContract.CategoriaDados._ID))==selecionadoCategoriaID && selecionadoCategoriaID !=-1){
+            selecionado = index;
+            selecionadoCategoriaID = -1;
+        }
         viewHolder.titulo.setChecked(index==selecionado);
     }
 
