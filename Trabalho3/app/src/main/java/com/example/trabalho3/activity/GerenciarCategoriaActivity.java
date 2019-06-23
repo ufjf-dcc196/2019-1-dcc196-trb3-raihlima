@@ -80,7 +80,7 @@ public class GerenciarCategoriaActivity extends AppCompatActivity {
 
             }
         });
-        builder.setTitle("Criar nova Etiqueta");
+        builder.setTitle("Criar nova Categoria");
         builder.setView(viewBuilder);
         builder.show();
     }

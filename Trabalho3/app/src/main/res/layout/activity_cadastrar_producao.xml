@@ -7,7 +7,7 @@
     tools:context=".activity.CadastrarProducaoActivity">
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/buttonCadastrarNovaProducao"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -25,7 +25,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintBottom_toTopOf="@+id/buttonCadastrarNovaProducao"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -38,16 +38,16 @@
                 android:id="@+id/textView6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="5"
+                android:layout_weight="-10"
                 android:text="Título:" />
 
             <EditText
-                android:id="@+id/editText9"
+                android:id="@+id/txtTituloNovaProducao"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="15"
+                android:layout_weight="100"
                 android:ems="10"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName|textCapSentences" />
         </TableRow>
 
         <TableRow
@@ -58,16 +58,16 @@
                 android:id="@+id/textView7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="5"
+                android:layout_weight="-10"
                 android:text="Descrição:" />
 
             <EditText
-                android:id="@+id/editText8"
+                android:id="@+id/txtDescricaoNovaProducao"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="15"
+                android:layout_weight="100"
                 android:ems="10"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName|textCapSentences" />
         </TableRow>
 
         <TableRow
@@ -78,16 +78,35 @@
                 android:id="@+id/textView8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="5"
+                android:layout_weight="-10"
                 android:text="Início:" />
 
             <EditText
-                android:id="@+id/editText6"
+                android:id="@+id/txtInicioNovaProducao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="100"
+                android:ems="10"
+                android:editable="false"
+                android:hint="DD/MM/AAAA"
+                android:inputType="none" />
+
+            <TextView
+                android:id="@+id/textView9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="15"
+                android:layout_weight="-10"
+                android:text="Fim:" />
+
+            <EditText
+                android:id="@+id/txtFimNovaProducao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="100"
                 android:ems="10"
-                android:inputType="date" />
+                android:editable="false"
+                android:hint="DD/MM/AAAA"
+                android:inputType="none" />
         </TableRow>
 
         <TableRow
@@ -95,19 +114,17 @@
             android:layout_height="match_parent" >
 
             <TextView
-                android:id="@+id/textView9"
+                android:id="@+id/textView10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="5"
-                android:text="Fim:" />
+                android:text="Categoria:" />
 
-            <EditText
-                android:id="@+id/editText7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="15"
-                android:ems="10"
-                android:inputType="date" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvNovaProducao"
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
+
+            </android.support.v7.widget.RecyclerView>
         </TableRow>
     </TableLayout>
 </android.support.constraint.ConstraintLayout>
