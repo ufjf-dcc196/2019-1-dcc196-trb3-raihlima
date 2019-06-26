@@ -169,8 +169,8 @@ public class CadastrarProducaoActivity extends AppCompatActivity {
             return false;
         } else if(inicio.getText().equals("")){
             return false;
-        } else if(fim.getText().equals("")){
-            return false;
+      //  } else if(fim.getText().equals("")){
+      //      return false;
         } else if(selecionarCategoriaAdapter.getSelecionado()==-1){
             return false;
         }
@@ -244,7 +244,7 @@ public class CadastrarProducaoActivity extends AppCompatActivity {
             //String dataL  = (this.cursor.getString(cursor.getColumnIndex(TarefaContract.TarefaDados.COLUMN_DATA_LIMITE)));
 
             fim.setText(dataL);
-
+            confirmar.setText("Salvar Alterações");
 
             idCategoria = cursor.getInt(cursor.getColumnIndex(HeadHunterContract.ProducaoDados.COLUMN_ID_CATEGORIA));
         }

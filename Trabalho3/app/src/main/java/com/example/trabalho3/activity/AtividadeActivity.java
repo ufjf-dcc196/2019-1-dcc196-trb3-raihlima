@@ -139,8 +139,8 @@ public class AtividadeActivity extends AppCompatActivity {
     public boolean verificaPreenchimento(){
         if(descricao.getText().equals("")){
             return false;
-        } else if (data.getText().equals("")){
-            return false;
+       // } else if (data.getText().equals("")){
+          //  return false;
         } else if (hora.getText().equals("")){
             return false;
         }
